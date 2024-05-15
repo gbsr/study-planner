@@ -1,0 +1,125 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Känn dig fri att ändra allt i den här filen! */
+:root {
+	--c1: #EFF5FB;
+	--c2: #0431B4;
+	--c3: #045FB4;
+	--c4: black;
+	--c5: #585858;
+	--c6: #F781BE;
+}
+* {
+	margin: 0;
+	box-sizing: border-box;
+	transition: all 0.5s;
+}
+body {
+	background-color: var(--c1);
+	min-height: 100vh;
+}
+main {
+	flex-grow: 1;
+}
+.column {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+button {
+	background-color: var(--c2);
+	color: var(--c1);
+	padding: 0.5em 1.3em;
+	border-radius: 0.3em;
+	border: none;
+}
+button:hover {
+	cursor: pointer;
+}
+button:active { background-color: #2E9AFE; }
+.controls {
+	margin-top: 0.5em;
+}
+
+header {
+	text-align: center;
+	border-bottom: 1px solid black;
+	margin-bottom: 0.4rem;
+}
+.day-view {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 0.8em;
+	padding: 0.3em;
+}
+.day-view > * {
+/* 	border: 1px solid black; */
+	border-radius: 0.3em;
+	padding: 0.4em;
+	min-width: 10em;
+	box-shadow: 0 0 0.4em var(--c3);
+}
+.day-view > :hover {
+	box-shadow: 0 0.2em 0.4em var(--c3);
+	transform: translateY(-0.2em);
+}
+h2 {
+	font-size: 1.2rem;
+	text-align: center;
+}
+
+.day {
+	display: flex;
+	flex-direction: column;
+}
+.day .item {
+	flex-grow: 1;
+}
+.done { color: var(--c5); }
+.due { background-color: var(--c6); }
+
+.today h2 {
+	text-decoration: underline;
+}
+
+.prio-items {
+	padding: 0.5em;
+	box-shadow: 0 0 0.4em var(--c3);
+}
+.prio-items .item {
+	margin: 0.75em 2em;
+	text-align: left;
+	box-shadow: 0 0 0.2em var(--c4);
+	padding: 0.5em 2em;
+	border-radius: 0.5em;
+}
+.prio-items .item:hover {
+	box-shadow: 0 0 0.6em var(--c3);
+}
+.prio-items .item.due:hover {
+	box-shadow: 0 0 0.6em var(--c4);
+}
+.list-container {
+	margin: 1.5em 0;
+	display: grid;
+	grid-template-columns: auto;
+	justify-content: center;
+	align-items: center;
+}
+
+footer {
+	text-align: center;
+	margin: 1em;
+	border-top: 1px solid var(--c3);
+	padding-top: 0.5em;
+}
