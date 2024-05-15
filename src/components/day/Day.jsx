@@ -1,6 +1,7 @@
 import Item from "./Item"
 
-// När du testar, kom ihåg att rendera komponenten med olika props
+// OBS, det är tillåtet att lägga till flera props
+// När du testar, rendera komponenten med olika värden på props
 const Day = ({ day }) => {
 	// TODO: implement rest of week
 	const dayName = 'Måndag'

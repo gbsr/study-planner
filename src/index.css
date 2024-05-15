@@ -54,7 +54,21 @@ header {
 	text-align: center;
 	border-bottom: 1px solid black;
 	margin-bottom: 0.4rem;
+	position: relative;
 }
+
+header .restart-week {
+	position: absolute;
+	right: 0.2em;
+	top: 0.2em;
+	background-color: var(--c1);
+	color: var(--c2);
+	border: 1px solid var(--c2);
+}
+
+
+
+
 .day-view {
 	display: flex;
 	flex-direction: row;
@@ -84,12 +98,22 @@ h2 {
 }
 .day .item {
 	flex-grow: 1;
+	padding: 0 0.4em;
+	margin: 0.2em 0;
+}
+.day .item:hover {
+	box-shadow: 0 0 0.2em var(--c2);
 }
 .done { color: var(--c5); }
 .due { background-color: var(--c6); }
 
 .today h2 {
 	text-decoration: underline;
+}
+
+.prio-list [type="search"] {
+	margin: 0 0 1.5em 0;
+	padding: 0.3em 0.4em;
 }
 
 .prio-items {
@@ -110,7 +134,7 @@ h2 {
 	box-shadow: 0 0 0.6em var(--c4);
 }
 .list-container {
-	margin: 1.5em 0;
+	margin: 1em 0;
 	display: grid;
 	grid-template-columns: auto;
 	justify-content: center;

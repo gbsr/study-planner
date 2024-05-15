@@ -11,6 +11,9 @@ const Item = ({ item }) => {
 			<label className={itemClass} onClick={handleChange}>
 				{item.text}
 			</label>
+			{/* <span title="Snooza">💤</span> */}
+			<span title="Ändra">✍️</span>
+			<span title="Ta bort">🗑️</span>
 		</div>
 	)
 }
