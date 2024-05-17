@@ -1,9 +1,33 @@
-import PrioItem from "./PrioItem"
-import { useStore } from '../../data/store.js'
+import { useEffect } from "react";
+import PrioItem from "./PrioItem";
+import { useStore } from "../../data/store.js";
+import { fetchAndUpdateTodos } from "../../data/data.js";
+import { weekdays } from "../../utils/date";
 
 const PrioList = () => {
-	const todos = useStore(state => state.todos)
-	const items = todos.filter(t => !t.done)
+	const { todos, updateTodos } = useStore((state) => ({ todos: state.todos, updateTodos: state.updateTodos }));
+
+	useEffect(() => {
+		fetchAndUpdateTodos().then((fetchedTodos) => {
+			updateTodos(fetchedTodos);
+		});
+	}, [updateTodos]);
+
+	console.log("Lista " + todos.length + " grejer att göra");
+	const items = todos.filter((t) => {
+		const currentDayOfWeek = ((new Date().getDay() + 6) % 7) + 1;
+		const nextTwoDays = [(currentDayOfWeek % 7) + 1, ((currentDayOfWeek + 1) % 7) + 1];
+		return t.dayOfWeek === currentDayOfWeek || nextTwoDays.includes(t.dayOfWeek);
+	});
+
+	const groupedItems = items.reduce((groups, item) => {
+		const key = item.dayOfWeek;
+		if (!groups[key]) {
+			groups[key] = [];
+		}
+		groups[key].push(item);
+		return groups;
+	}, {});
 
 	return (
 		<div className="prio-list">
@@ -11,14 +35,19 @@ const PrioList = () => {
 			<div className="list-container">
 				<input type="search" placeholder="Filtrera uppgifter" />
 
-				<div className="prio-items">
-					{items.map((item, index) => (
-						<PrioItem key={item.id} item={item} num={index+1} />
-					))}
-				</div>
-
+				{Object.entries(groupedItems).map(([day, items]) => (
+					<div key={day}>
+						<h3>{weekdays[day - 1]}</h3>
+						<div className="prio-items">
+							{items.map((item, index) => (
+								<PrioItem key={item.id} item={item} num={index + 1} />
+							))}
+						</div>
+					</div>
+				))}
 			</div>
 		</div>
-	)
-}
-export default PrioList
+	);
+};
+
+export default PrioList;

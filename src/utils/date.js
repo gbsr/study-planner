@@ -1,8 +1,14 @@
-const weekdays = ['söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag']
+const weekdays = ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"];
 
-// Den här funktionen är beroende av JavaScripts Date-modul och är svår att testa separat. Du behöver inte skriva enhetstest för den.
 function getToday() {
-	return weekdays[new Date().getDay()]
+	const dayIndex = new Date().getDay();
+	// Because we start on monday, which is 1
+	const adjustedDayIndex = (dayIndex === 0) ? 6 : dayIndex - 1;
+	return weekdays[adjustedDayIndex];
 }
 
-export { getToday }
+function getCurrentDate() {
+	return new Date().toISOString().slice(0, 10);
+}
+
+export { getToday, getCurrentDate, weekdays };
