@@ -1,5 +1,5 @@
 import { db } from "./firestore";
-import { collection, getDocs, query, orderBy, addDoc } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, addDoc, doc, updateDoc } from "firebase/firestore";
 
 async function getTodos() {
 
@@ -34,5 +34,24 @@ async function addTodo(todo) {
 	}
 }
 
-export { addTodo, getTodos };
+async function updateTodo(todo) {
+	const { id, title, desc, done, late, date, dayOfWeek } = todo;
+	const todoDoc = {
+		title: title,
+		desc: desc,
+		done: done,
+		late: late,
+		date: date,
+		dayOfWeek: dayOfWeek,
+	};
+	try {
+		const todoRef = doc(db, "todos", id);
+		await updateDoc(todoRef, todoDoc);
+		console.log('' + id + ' updated');
+	} catch (error) {
+		console.error("Error updating document: ", error);
+	}
+}
+
+export { addTodo, getTodos, updateTodo };
 

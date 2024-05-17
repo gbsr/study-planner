@@ -3,10 +3,22 @@ import { useStore } from "../../data/store";
 const PrioItem = ({ item, num }) => {
 	const { title, desc, late, done } = item;
 	const toggleTodo = useStore((state) => state.toggleTodo);
+	const postponeTodo = useStore((state) => state.postponeTodo);
+	const prioritizeItem = useStore((state) => state.prioritizeTodo);
 
 	const handleDone = () => {
 		console.log("Marking as done");
 		toggleTodo(item.id);
+	};
+
+	const handlePostpone = () => {
+		console.log("Postponing");
+		postponeTodo(item.id);
+	};
+
+	const handlePrioritize = () => {
+		console.log("Prioritizing");
+		prioritizeItem(item.id);
 	};
 
 	return (
@@ -21,7 +33,12 @@ const PrioItem = ({ item, num }) => {
 				</button>
 				<button className="btn">Ta bort</button>
 				<button className="btn">Ändra</button>
-				<button className="btn">Skjut upp</button>
+				<button className="btn" onClick={handlePostpone}>
+					Skjut Upp
+				</button>
+				<button className="btn" onClick={handlePrioritize}>
+					Prioritera
+				</button>
 			</div>
 		</div>
 	);

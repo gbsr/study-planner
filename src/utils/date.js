@@ -11,4 +11,12 @@ function getCurrentDate() {
 	return new Date().toISOString().slice(0, 10);
 }
 
-export { getToday, getCurrentDate, weekdays };
+// might come in handy later
+function getTomorrow() {
+	const today = new Date();
+	const tomorrow = new Date(today);
+	tomorrow.setDate(today.getDate() + 1);
+	return tomorrow.getDay();
+}
+
+export { getToday, getCurrentDate, getTomorrow, weekdays };
