@@ -9,7 +9,7 @@ test('getCurrentDate returns the current date in YYYY-MM-DD format', () => {
 });
 
 // also regex version for brevity
-test('getCurrentDate returns the current date in YYYY-MM-DD format', () => {
+test('getCurrentDate returns the current date in YYYY-MM-DD format by regex expression', () => {
 	const currentDate = getCurrentDate();
 	const expectedFormat = /^\d{4}-\d{2}-\d{2}$/;
 	assert(expectedFormat.test(currentDate));
