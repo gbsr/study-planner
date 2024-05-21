@@ -14,6 +14,7 @@ async function getTodos() {
 	} catch (error) {
 		console.error("Error getting documents: ", error);
 	}
+	console.log('Todos:', todos);
 	return todos;
 }
 
