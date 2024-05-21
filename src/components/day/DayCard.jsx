@@ -3,7 +3,7 @@ import { addTodo } from "../../utils/crud";
 import { useState } from "react";
 import { weekdays } from "../../utils/date";
 
-const Day = ({ day, dayOfWeek }) => {
+const DayCard = ({ day, dayOfWeek }) => {
 	const week = weekdays;
 	const [title, setTitle] = useState("");
 	const [desc, setDesc] = useState("");
@@ -54,4 +54,4 @@ const Day = ({ day, dayOfWeek }) => {
 	);
 };
 
-export default Day;
+export default DayCard;

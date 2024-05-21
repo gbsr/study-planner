@@ -15,8 +15,8 @@ const PrioList = () => {
 
 	console.log("Lista " + todos.length + " grejer att göra");
 	const items = todos.filter((t) => {
-		const currentDayOfWeek = ((new Date().getDay() + 6) % 7) + 1;
-		const nextTwoDays = [(currentDayOfWeek % 7) + 1, ((currentDayOfWeek + 1) % 7) + 1];
+		const currentDayOfWeek = weekdays[(new Date().getDay() + 6) % 7];
+		const nextTwoDays = [weekdays[currentDayOfWeek % 7], weekdays[(currentDayOfWeek + 1) % 7]];
 		return t.dayOfWeek === currentDayOfWeek || nextTwoDays.includes(t.dayOfWeek);
 	});
 
