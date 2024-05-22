@@ -40,7 +40,7 @@ const PrioList = () => {
 						<h3>{weekdays[day - 1]}</h3>
 						<div className="prio-items">
 							{items.map((item, index) => (
-								<PrioItem key={item.id} item={item} num={index + 1} />
+								<PrioItem key={item.id} item={item} title={item.title} num={index + 1} />
 							))}
 						</div>
 					</div>

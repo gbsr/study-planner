@@ -1,9 +1,7 @@
-import React from "react";
-import PrioItem from "./PrioItem";
+import PrioList from "./PrioList";
 
-describe("<PrioItem />", () => {
-	it("renders", () => {
-		// see: https://on.cypress.io/mounting-react
-		cy.mount(<PrioItem />);
+describe("<PrioList />", () => {
+	it("should mount without crashing", () => {
+		cy.mount(<PrioList />);
 	});
 });
