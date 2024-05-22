@@ -23,7 +23,7 @@ const DayCard = ({ day, dayOfWeek }) => {
 		<div className="day">
 			<h2> {week[dayOfWeek - 1]} </h2>
 
-			{day.map((item) => (
+			{day?.map((item) => (
 				<Item key={item.id} item={item} />
 			))}
 
