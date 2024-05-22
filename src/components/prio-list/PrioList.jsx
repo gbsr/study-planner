@@ -16,7 +16,12 @@ const PrioList = () => {
 	console.log("Lista " + todos.length + " grejer att göra");
 	const items = todos.filter((t) => {
 		const currentDayOfWeek = weekdays[(new Date().getDay() + 6) % 7];
-		const nextTwoDays = [weekdays[currentDayOfWeek % 7], weekdays[(currentDayOfWeek + 1) % 7]];
+		const currentDayIndex = weekdays.indexOf(currentDayOfWeek);
+		const nextTwoDays = [
+			weekdays[currentDayIndex],
+			weekdays[(currentDayIndex + 1) % 7],
+			weekdays[(currentDayIndex + 2) % 7],
+		];
 		return t.dayOfWeek === currentDayOfWeek || nextTwoDays.includes(t.dayOfWeek);
 	});
 
@@ -37,7 +42,7 @@ const PrioList = () => {
 
 				{Object.entries(groupedItems).map(([day, items]) => (
 					<div key={day}>
-						<h3>{weekdays[day - 1]}</h3>
+						<h3>{day}</h3>
 						<div className="prio-items">
 							{items.map((item, index) => (
 								<PrioItem key={item.id} item={item} title={item.title} num={index + 1} />

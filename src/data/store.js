@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getToday } from "../utils/date.js";
+import { getToday, weekdays } from "../utils/date.js";
 import { updateTodo } from "../utils/crud.js";
 
 const useStore = create(set => ({
@@ -28,7 +28,9 @@ const useStore = create(set => ({
 	postponeTodo: id => set(state => {
 		const updatedTodos = state.todos.map(t => {
 			if (t.id === id) {
-				const updatedDayOfWeek = t.dayOfWeek === 0 ? 6 : t.dayOfWeek + 1;
+				const currentDayIndex = weekdays.indexOf(t.dayOfWeek);
+				const updatedDayOfWeekIndex = (currentDayIndex + 1) % 7;
+				const updatedDayOfWeek = weekdays[updatedDayOfWeekIndex];
 				const updatedTodo = { ...t, dayOfWeek: updatedDayOfWeek };
 				updateTodo(updatedTodo);
 				return updatedTodo;
@@ -38,12 +40,13 @@ const useStore = create(set => ({
 		});
 		return { ...state, todos: updatedTodos };
 	}),
-
 
 	prioritizeTodo: id => set(state => {
 		const updatedTodos = state.todos.map(t => {
 			if (t.id === id) {
-				const updatedDayOfWeek = t.dayOfWeek === 0 ? 6 : t.dayOfWeek - 1;
+				const currentDayIndex = weekdays.indexOf(t.dayOfWeek);
+				const updatedDayOfWeekIndex = (currentDayIndex - 1 + 7) % 7;
+				const updatedDayOfWeek = weekdays[updatedDayOfWeekIndex];
 				const updatedTodo = { ...t, dayOfWeek: updatedDayOfWeek };
 				updateTodo(updatedTodo);
 				return updatedTodo;
@@ -54,6 +57,7 @@ const useStore = create(set => ({
 		return { ...state, todos: updatedTodos };
 	}),
 
+	// TODO: take a look at this later and actually implment it properly
 	resetTodos: () => set(state => ({ todos: [] })),
 }));
 
