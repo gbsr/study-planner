@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { getToday, weekdays } from "../utils/date.js";
-import { updateTodo } from "../utils/crud.js";
+import { addTodo, updateTodo } from "../utils/crud.js";
 
 const useStore = create(set => ({
 	todos: [],
@@ -20,6 +20,11 @@ const useStore = create(set => ({
 				}
 			})
 		};
+	}),
+
+	addTodo: todo => set(state => {
+		addTodo(todo);
+		return { ...state, todos: [...state.todos, todo] };
 	}),
 
 
