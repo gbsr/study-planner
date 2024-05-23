@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { getToday, weekdays } from "../utils/date.js";
-import { addTodo as addTodoToFirestore, updateTodo, getTodos } from "../utils/crud.js";
+import { addTodo as addTodoToFirestore, updateTodo, getTodos, deleteTodo } from "../utils/crud.js";
 
 const useStore = create(set => ({
 	todos: [],
@@ -81,6 +81,17 @@ const useStore = create(set => ({
 		});
 		return { ...state, todos: updatedTodos };
 	}),
+
+	deleteTodo: (id) => set(async (state) => {
+		const updatedTodos = state.todos.filter(t => t.id !== id);
+		await deleteTodo({ id });
+		return { todos: updatedTodos };
+	}),
+
+	searchTodoItem(todos, search) {
+		const result = todos.filter(t => t.title.includes(search));
+		return result;
+	},
 
 	// TODO: take a look at this later and actually implment it properly
 	resetTodos: () => set(state => ({ todos: [] })),

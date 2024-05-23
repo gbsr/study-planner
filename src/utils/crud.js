@@ -1,5 +1,5 @@
 import { db } from "./firestore";
-import { collection, getDocs, query, orderBy, addDoc, doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, query, orderBy, addDoc, doc, updateDoc, deleteDoc, } from "firebase/firestore";
 
 async function getTodos() {
 
@@ -54,5 +54,16 @@ async function updateTodo(todo) {
 	}
 }
 
-export { addTodo, getTodos, updateTodo };
+async function deleteTodo(todo) {
+	const { id } = todo;
+	try {
+		const todoRef = doc(db, "todos", id);
+		await deleteDoc(todoRef);
+		console.log('' + id + ' deleted');
+	} catch (error) {
+		console.error("Error deleting document: ", error);
+	}
+}
+
+export { addTodo, getTodos, updateTodo, deleteTodo };
 

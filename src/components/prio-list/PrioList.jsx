@@ -9,6 +9,7 @@ const PrioList = ({ update }) => {
 		getAllTodos: state.getAllTodos,
 	}));
 	const [loading, setLoading] = useState(true);
+	const [searchTerm, setSearchTerm] = useState("");
 
 	useEffect(() => {
 		const loadTodos = async () => {
@@ -23,6 +24,10 @@ const PrioList = ({ update }) => {
 		console.log("todos after fetch:", todos);
 	}, [todos]);
 
+	const searchTodos = (e) => {
+		setSearchTerm(e.target.value);
+	};
+
 	if (loading) {
 		return <div>Loading...</div>;
 	}
@@ -32,7 +37,7 @@ const PrioList = ({ update }) => {
 		return <div>Error: todos is not an array</div>;
 	}
 
-	const items = todos;
+	const items = todos.filter((todo) => todo.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
 	const groupedItems = weekdays.reduce((groups, day) => {
 		groups[day] = items.filter((item) => item.dayOfWeek === day);
@@ -43,7 +48,7 @@ const PrioList = ({ update }) => {
 		<div className="prio-list">
 			<h2> Vad ska jag göra nu? </h2>
 			<div className="list-container">
-				<input type="search" placeholder="Filtrera uppgifter" />
+				<input type="search" placeholder="Filtrera uppgifter" onChange={searchTodos} />
 
 				{weekdays.map((day) => (
 					<div key={day}>
