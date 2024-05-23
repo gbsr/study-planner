@@ -6,6 +6,7 @@ const PrioItem = ({ item, num }) => {
 	const toggleTodo = useStore((state) => state.toggleTodo);
 	const postponeTodo = useStore((state) => state.postponeTodo);
 	const prioritizeItem = useStore((state) => state.prioritizeTodo);
+	const deleteTodo = useStore((state) => state.deleteTodo);
 	const updateTodos = useStore((state) => state.updateTodos);
 	const [isEditing, setIsEditing] = useState(false);
 	const [editedItem, setEditedItem] = useState(item);
@@ -40,6 +41,10 @@ const PrioItem = ({ item, num }) => {
 		setEditedItem({ ...editedItem, [name]: value });
 	};
 
+	const handleDelete = () => {
+		deleteTodo(item.id);
+	};
+
 	return (
 		<div className={`prio-item ${late ? "late" : ""} ${done ? "done" : ""}`}>
 			<h3>
@@ -51,10 +56,12 @@ const PrioItem = ({ item, num }) => {
 			</h3>
 			<p>{isEditing ? <textarea name="desc" value={editedItem.desc} onChange={handleChange} /> : desc}</p>
 			<div className="prio-controls">
-				<button className="btn" onClick={handleDone}>
+				<button className="btn done" onClick={handleDone}>
 					{done ? "Inte Klar" : "Klar"}
 				</button>
-				<button className="btn">Ta bort</button>
+				<button className="btn delete" onClick={handleDelete}>
+					Ta bort
+				</button>
 				{isEditing ? (
 					<button className="btn edit" onClick={handleSave}>
 						Save
@@ -64,10 +71,10 @@ const PrioItem = ({ item, num }) => {
 						Ändra
 					</button>
 				)}
-				<button className="btn" onClick={handlePostpone}>
+				<button className="btn postpone" onClick={handlePostpone}>
 					Skjut Upp
 				</button>
-				<button className="btn" onClick={handlePrioritize}>
+				<button className="btn prioritize" onClick={handlePrioritize}>
 					Prioritera
 				</button>
 			</div>
