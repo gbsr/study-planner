@@ -1,13 +1,34 @@
 import { create } from "zustand";
 import { getToday, weekdays } from "../utils/date.js";
-import { addTodo, updateTodo } from "../utils/crud.js";
+import { addTodo, updateTodo, getTodos } from "../utils/crud.js";
 
 const useStore = create(set => ({
 	todos: [],
-
 	todayName: getToday(),
 
-	updateTodos: (todos) => set({ todos }),
+	getAllTodos: async () => {
+		const todos = await getTodos();
+		set({ todos });
+	},
+
+	updateTodos: async (id, newTitle, newDesc) => set((state) => {
+		const todoIndex = state.todos.findIndex((todo) => todo.id === id);
+
+		if (todoIndex === -1) {
+			return { todos: state.todos };
+		}
+
+		const updatedTodo = { ...state.todos[todoIndex], title: newTitle, desc: newDesc };
+		updateTodo(updatedTodo);
+
+		const updatedTodos = [
+			...state.todos.slice(0, todoIndex),
+			updatedTodo,
+			...state.todos.slice(todoIndex + 1),
+		];
+
+		return { todos: updatedTodos };
+	}),
 
 	toggleTodo: id => set(state => {
 		return {
