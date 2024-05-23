@@ -39,36 +39,28 @@ const PrioList = () => {
 		return <div>Error: todos is not an array</div>;
 	}
 
-	const items = todos.filter((t) => {
-		const currentDayOfWeek = weekdays[(new Date().getDay() + 6) % 7];
-		const currentDayIndex = weekdays.indexOf(currentDayOfWeek);
-		const nextTwoDays = [
-			weekdays[currentDayIndex],
-			weekdays[(currentDayIndex + 1) % 7],
-			weekdays[(currentDayIndex + 2) % 7],
-		];
-		return t.dayOfWeek === currentDayOfWeek || nextTwoDays.includes(t.dayOfWeek);
-	});
+	// ...
 
-	const groupedItems = items.reduce((groups, item) => {
-		const key = item.dayOfWeek;
-		if (!groups[key]) {
-			groups[key] = [];
-		}
-		groups[key].push(item);
+	const items = todos;
+
+	const groupedItems = weekdays.reduce((groups, day) => {
+		groups[day] = items.filter((item) => item.dayOfWeek === day);
 		return groups;
 	}, {});
+
+	// ...
 
 	return (
 		<div className="prio-list">
 			<h2> Vad ska jag göra nu? </h2>
 			<div className="list-container">
 				<input type="search" placeholder="Filtrera uppgifter" />
-				{Object.entries(groupedItems).map(([day, items]) => (
+
+				{weekdays.map((day) => (
 					<div key={day}>
 						<h3>{day}</h3>
 						<div className="prio-items">
-							{items.map((item, index) => (
+							{groupedItems[day].map((item, index) => (
 								<PrioItem key={item.id} item={item} title={item.title} num={index + 1} onSave={handleEdit} />
 							))}
 						</div>

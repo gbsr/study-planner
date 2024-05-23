@@ -12,7 +12,6 @@ const Main = () => {
 			<div className="day-view">
 				{days.map((day, index) => {
 					const dayOfWeek = (index % 7) + 1; // use modulo to calc day of week (add one because zero-based of course)
-					console.log("dayOfWeek Main:", dayOfWeek);
 					return <DayCard day={day} dayOfWeek={dayOfWeek} key={index} />;
 				})}
 			</div>
