@@ -42,6 +42,7 @@ button {
 	border-radius: 0.3em;
 	border: none;
 	margin: 0.5rem;
+	font-size: 1rem;
 }
 button:hover {
 	cursor: pointer;
@@ -49,17 +50,24 @@ button:hover {
 button:active {
 	background-color: #2e9afe;
 }
+button.complete:not(.done) {
+	background-color: var(--c3);
+	color: rgb(213, 210, 210);
+}
 
 .edit {
 	background: rgb(182, 225, 52);
 	color: rgb(32, 32, 32);
-	font-size: 1rem;
 	border: 1px solid black;
 }
 .controls {
 	margin-top: 0.5em;
-	/* display: flex; */
-	/* flex-direction: row; */
+	display: flex;
+	align-content: space-around;
+	align-items: stretch;
+	flex-direction: row;
+	justify-content: center;
+	flex-wrap: wrap;
 }
 
 header {

@@ -3,32 +3,25 @@ import PrioItem from "./PrioItem";
 import { useStore } from "../../data/store.js";
 import { weekdays } from "../../utils/date";
 
-const PrioList = () => {
-	const { todos, getAllTodos, updateTodos } = useStore((state) => ({
+const PrioList = ({ update }) => {
+	const { todos, getAllTodos } = useStore((state) => ({
 		todos: state.todos,
 		getAllTodos: state.getAllTodos,
-		updateTodos: state.updateTodos,
 	}));
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		getAllTodos()
-			.then(() => {
-				setLoading(false);
-			})
-			.catch((error) => {
-				console.error("Error fetching todos:", error);
-				setLoading(false);
-			});
-	}, [getAllTodos]);
+		const loadTodos = async () => {
+			setLoading(true);
+			await getAllTodos();
+			setLoading(false);
+		};
+		loadTodos();
+	}, [getAllTodos, update]);
 
 	useEffect(() => {
 		console.log("todos after fetch:", todos);
 	}, [todos]);
-
-	const handleEdit = (id, newText) => {
-		updateTodos(id, newText);
-	};
 
 	if (loading) {
 		return <div>Loading...</div>;
@@ -39,16 +32,12 @@ const PrioList = () => {
 		return <div>Error: todos is not an array</div>;
 	}
 
-	// ...
-
 	const items = todos;
 
 	const groupedItems = weekdays.reduce((groups, day) => {
 		groups[day] = items.filter((item) => item.dayOfWeek === day);
 		return groups;
 	}, {});
-
-	// ...
 
 	return (
 		<div className="prio-list">
@@ -61,7 +50,7 @@ const PrioList = () => {
 						<h3>{day}</h3>
 						<div className="prio-items">
 							{groupedItems[day].map((item, index) => (
-								<PrioItem key={item.id} item={item} title={item.title} num={index + 1} onSave={handleEdit} />
+								<PrioItem key={item.id} item={item} title={item.title} num={index + 1} />
 							))}
 						</div>
 					</div>

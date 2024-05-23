@@ -17,6 +17,8 @@ const PrioItem = ({ item, num }) => {
 
 	const handleDone = () => {
 		toggleTodo(item.id);
+		console.log("Toggling todo", item.id);
+		console.log("Done?", done);
 	};
 
 	const handlePostpone = () => {
@@ -56,7 +58,7 @@ const PrioItem = ({ item, num }) => {
 			</h3>
 			<p>{isEditing ? <textarea name="desc" value={editedItem.desc} onChange={handleChange} /> : desc}</p>
 			<div className="prio-controls">
-				<button className="btn done" onClick={handleDone}>
+				<button className="btn complete" onClick={handleDone}>
 					{done ? "Inte Klar" : "Klar"}
 				</button>
 				<button className="btn delete" onClick={handleDelete}>

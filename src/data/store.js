@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { getToday, weekdays } from "../utils/date.js";
-import { addTodo, updateTodo, getTodos } from "../utils/crud.js";
+import { addTodo as addTodoToFirestore, updateTodo, getTodos } from "../utils/crud.js";
 
 const useStore = create(set => ({
 	todos: [],
@@ -43,14 +43,13 @@ const useStore = create(set => ({
 		};
 	}),
 
-	addTodo: todo => set(state => {
-		addTodo(todo);
-		return { ...state, todos: [...state.todos, todo] };
-	}),
-
+	addTodo: async todo => {
+		await addTodoToFirestore(todo);
+		const todos = await getTodos();
+		set({ todos });
+	},
 
 	// TODO: Refactor this at some point maybe(?)
-
 	postponeTodo: id => set(state => {
 		const updatedTodos = state.todos.map(t => {
 			if (t.id === id) {

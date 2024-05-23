@@ -2,20 +2,27 @@ import { useStore } from "../data/store.js";
 import DayCard from "./day/DayCard";
 import PrioList from "./prio-list/PrioList.jsx";
 import { splitTodosIntoDays } from "../utils/list.js";
+import { useState } from "react";
 
 const Main = () => {
-	const { todos = [] } = useStore((state) => state.todos);
+	const todos = useStore((state) => state.todos);
 	const days = splitTodosIntoDays(todos);
+	const [update, setUpdate] = useState(false);
+
+	const handleUpdate = () => {
+		setUpdate(!update);
+		console.log("handleUpdate called, update state:", !update);
+	};
 
 	return (
 		<main>
 			<div className="day-view">
 				{days.map((day, index) => {
 					const dayOfWeek = (index % 7) + 1; // use modulo to calc day of week (add one because zero-based of course)
-					return <DayCard day={day} dayOfWeek={dayOfWeek} key={index} />;
+					return <DayCard handleUpdate={handleUpdate} day={day} dayOfWeek={dayOfWeek} key={index} />;
 				})}
 			</div>
-			<PrioList />
+			<PrioList update={update} />
 		</main>
 	);
 };
