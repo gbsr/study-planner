@@ -43,7 +43,7 @@ describe("PrioItem", () => {
 		useStore.getState().toggleTodo = toggleTodo;
 
 		cy.mount(<PrioItem item={mockItem} num={mockItem.num} />);
-		cy.get(".prio-item .btn.done").click();
+		cy.get(".prio-item .btn.complete").click();
 		cy.wait(1000);
 		cy.wrap(toggleTodo).should("have.been.calledOnce");
 	});
