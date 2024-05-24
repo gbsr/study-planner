@@ -66,7 +66,7 @@ const PrioItem = ({ item, num }) => {
 				</button>
 				{isEditing ? (
 					<button className="btn edit" onClick={handleSave}>
-						Save
+						Spara
 					</button>
 				) : (
 					<button className="btn edit" onClick={handleEdit}>
