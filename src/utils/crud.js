@@ -37,6 +37,10 @@ async function addTodo(todo) {
 
 async function updateTodo(todo) {
 	const { id, title, desc, done, late, date, dayOfWeek } = todo;
+	if (!id) {
+		console.error("Error: No ID provided for update");
+		return;
+	}
 	const todoDoc = {
 		title: title,
 		desc: desc,
