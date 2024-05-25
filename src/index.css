@@ -74,7 +74,10 @@ header {
 	text-align: center;
 	border-bottom: 1px solid black;
 	margin-bottom: 0.4rem;
-	position: relative;
+	position: fixed;
+	top: 0;
+	width: 100vw;
+	background-color: var(--c1);
 }
 
 header .restart-week {
@@ -93,6 +96,7 @@ header .restart-week {
 	gap: 0.8em;
 	padding: 0.3em;
 	justify-content: center;
+	margin-top: 3rem;
 }
 .day-view > * {
 	border: 1px solid black;
