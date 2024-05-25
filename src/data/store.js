@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { getToday, weekdays } from "../utils/date.js";
 import { addTodo as addTodoToFirestore, updateTodo, getTodos, deleteTodo } from "../utils/crud.js";
+import { toggleTodo as toggleTodoInDatabase } from "../utils/crud.js";
 
 const useStore = create(set => ({
 	todos: [],
@@ -9,6 +10,18 @@ const useStore = create(set => ({
 	getAllTodos: async () => {
 		const todos = await getTodos();
 		set({ todos });
+	},
+
+	restartWeek: async () => {
+		const todos = await getTodos();
+		const updatedTodos = await Promise.all(todos.map(async todo => {
+			if (todo.done) {
+				todo.done = false;
+				await updateTodo(todo);
+			}
+			return todo;
+		}));
+		set({ todos: updatedTodos });
 	},
 
 	updateTodos: async (id, newTitle, newDesc) => set((state) => {
@@ -31,15 +44,19 @@ const useStore = create(set => ({
 	}),
 
 	toggleTodo: id => set(state => {
+		const updatedTodos = state.todos.map(t => {
+			if (t.id === id) {
+				const updatedTodo = { ...t, done: !t.done };
+				toggleTodoInDatabase(id);
+				return updatedTodo;
+			} else {
+				return t;
+			}
+		});
+
 		return {
 			...state,
-			todos: state.todos.map(t => {
-				if (t.id === id) {
-					return { ...t, done: !t.done };
-				} else {
-					return t;
-				}
-			})
+			todos: updatedTodos,
 		};
 	}),
 

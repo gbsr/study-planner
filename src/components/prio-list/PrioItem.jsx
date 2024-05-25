@@ -15,10 +15,8 @@ const PrioItem = ({ item, num }) => {
 		setEditedItem(item);
 	}, [item]);
 
-	const handleDone = () => {
+	const handleDone = async () => {
 		toggleTodo(item.id);
-		console.log("Toggling todo", item.id);
-		console.log("Done?", done);
 	};
 
 	const handlePostpone = () => {

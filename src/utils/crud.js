@@ -53,6 +53,7 @@ async function updateTodo(todo) {
 		const todoRef = doc(db, "todos", id);
 		await updateDoc(todoRef, todoDoc);
 		console.log('' + id + ' updated');
+		console.log('todo done status set: ', done);
 	} catch (error) {
 		console.error("Error updating document: ", error);
 	}
@@ -69,5 +70,13 @@ async function deleteTodo(todo) {
 	}
 }
 
-export { addTodo, getTodos, updateTodo, deleteTodo };
+async function toggleTodo(id) {
+	const todos = await getTodos();
+	const todo = todos.find((todo) => todo.id === id);
+	const updatedTodo = { ...todo, done: !todo.done };
+	await updateTodo(updatedTodo);
+	return updatedTodo;
+}
+
+export { addTodo, getTodos, updateTodo, deleteTodo, toggleTodo };
 
