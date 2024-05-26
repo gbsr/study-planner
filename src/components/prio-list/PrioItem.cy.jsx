@@ -23,7 +23,7 @@ describe("PrioItem", () => {
 		cy.get('.prio-item textarea[name="desc"]').clear().type("New Description");
 
 		cy.get(".prio-item .btn.edit")
-			.contains("Save")
+			.contains("Spara")
 			.click()
 			.then(() => {
 				mockItem.title = "New Title";
