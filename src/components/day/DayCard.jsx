@@ -21,6 +21,8 @@ const DayCard = ({ handleUpdate, day, dayOfWeek }) => {
 		handleUpdate();
 	};
 
+	// console.log("should re-render now");
+
 	return (
 		<div className="day">
 			<h2> {week[dayOfWeek - 1]} </h2>

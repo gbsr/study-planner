@@ -1,7 +1,7 @@
 import { useStore } from "../../data/store";
 import { useState, useEffect } from "react";
 
-const PrioItem = ({ item, num }) => {
+const PrioItem = ({ handleUpdate, item, num }) => {
 	const { title, desc, late, done } = item;
 	const toggleTodo = useStore((state) => state.toggleTodo);
 	const postponeTodo = useStore((state) => state.postponeTodo);
@@ -41,8 +41,14 @@ const PrioItem = ({ item, num }) => {
 		setEditedItem({ ...editedItem, [name]: value });
 	};
 
-	const handleDelete = () => {
-		deleteTodo(item.id);
+	const handleDelete = async () => {
+		try {
+			await deleteTodo(item.id);
+			console.log("Todo deleted: ", item.id);
+			handleUpdate();
+		} catch (error) {
+			console.error("Error deleting todo: ", error);
+		}
 	};
 
 	return (

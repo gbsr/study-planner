@@ -3,7 +3,7 @@ import PrioItem from "./PrioItem";
 import { useStore } from "../../data/store.js";
 import { weekdays } from "../../utils/date";
 
-const PrioList = ({ update }) => {
+const PrioList = ({ handleDelete, handleUpdate, update }) => {
 	const { todos, getAllTodos } = useStore((state) => ({
 		todos: state.todos,
 		getAllTodos: state.getAllTodos,
@@ -17,12 +17,9 @@ const PrioList = ({ update }) => {
 			await getAllTodos();
 			setLoading(false);
 		};
+
 		loadTodos();
 	}, [getAllTodos, update]);
-
-	useEffect(() => {
-		console.log("todos after fetch:", todos);
-	}, [todos]);
 
 	const searchTodos = (e) => {
 		setSearchTerm(e.target.value);
@@ -55,7 +52,14 @@ const PrioList = ({ update }) => {
 						<h3>{day}</h3>
 						<div className="prio-items">
 							{groupedItems[day].map((item, index) => (
-								<PrioItem key={item.id} item={item} title={item.title} num={index + 1} />
+								<PrioItem
+									key={item.id}
+									item={item}
+									title={item.title}
+									num={index + 1}
+									handleUpdate={handleUpdate}
+									handleDelete={handleDelete}
+								/>
 							))}
 						</div>
 					</div>
